@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saad Ullah Khan | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 255, 200, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .data-streams {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.2;
+            display: block;
+        }
+
+        .stream {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, #00ffc8, transparent);
+            animation: streamFlow 5s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes streamFlow {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .terminal {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .header-terminal {
+            background: rgba(10, 14, 39, 0.8);
+            border: 2px solid #00ffc8;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.3), inset 0 0 20px rgba(0, 255, 200, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-terminal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 255, 200, 0.1) 50%,
+                transparent 70%
+            );
+            animation: scan 4s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateX(-100%) translateY(-100%);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%);
+            }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #00ffc8;
+            padding: 5px;
+            background: rgba(0, 255, 200, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 255, 200, 0.8);
+            }
+        }
+
+        .username {
+            font-size: 2.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+            font-weight: 700;
+        }
+
+        .user-title {
+            color: #a0a0b0;
+            font-size: 1.2rem;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            color: #00ffc8;
+            text-decoration: none;
+            padding: 10px 18px;
+            border: 2px solid #00ffc8;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 200, 0.05);
+        }
+
+        
+        .contact-link:hover {
+            background: #00ffc8;
+            color: #0a0e27;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 200, 0.4);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .module {
+            background: rgba(10, 14, 39, 0.6);
+            border: 2px solid #00ffc8;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .module:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 255, 200, 0.35), inset 0 0 20px rgba(0, 255, 200, 0.1);
+            background: rgba(10, 14, 39, 0.8);
+        }
+
+        .module::before {
+            content: '>';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #00ffc8;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .module-icon {
+            font-size: 2.5rem;
+            color: #00ffc8;
+            margin-bottom: 15px;
+        }
+
+        .module-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .module-desc {
+            color: #b0b0c0;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .overlay-content {
+            background: rgba(10, 14, 39, 0.95);
+            border: 2px solid #00ffc8;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 255, 200, 0.4), inset 0 0 20px rgba(0, 255, 200, 0.05);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 2px solid #00ffc8;
+            color: #00ffc8;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .close-overlay:hover {
+            background: #00ffc8;
+            color: #0a0e27;
+            transform: rotate(90deg);
+        }
+
+        .overlay-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 255, 200, 0.5);
+        }
+
+        .overlay-title {
+            font-size: 2.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 255, 200, 0.5);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .overlay-subtitle {
+            color: #a0a0b0;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .content-section {
+            margin-bottom: 30px;
+        }
+
+        .content-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 255, 200, 0.5);
+            font-weight: 700;
+        }
+
+        .content-list {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .content-list li {
+            margin-bottom: 12px;
+            color: #d0d0d0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .content-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #00ffc8;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #00ffc8;
+            font-weight: 600;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(0, 255, 200, 0.15);
+            border: 1px solid #00ffc8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.85rem;
+            color: #00ffc8;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: rgba(0, 255, 200, 0.25);
+            box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+        }
+
+        .project-showcase {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .project-item {
+            background: rgba(0, 255, 200, 0.08);
+            border: 1px solid rgba(0, 255, 200, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .project-item:hover {
+            background: rgba(0, 255, 200, 0.15);
+            border-color: #00ffc8;
+            transform: translateX(10px);
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.2);
+        }
+
+        .project-title {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #00ffc8, transparent);
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ffc8;
+            box-shadow: 0 0 10px #00ffc8;
+            border: none;
+        }
+
+        .timeline-date {
+            color: #a0a0b0;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .timeline-title {
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .terminal-command {
+            background: rgba(0, 255, 200, 0.08);
+            border-left: 4px solid #00ffc8;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            color: #00ffc8;
+            border-radius: 5px;
+        }
+
+        .resume-download-btn {
+            background: linear-gradient(135deg, #00ffc8 0%, #00d9ff 100%);
+            border: none;
+            color: #0a0e27;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 255, 200, 0.3);
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 999;
+        }
+
+        .resume-download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 255, 200, 0.6);
+            background: linear-gradient(135deg, #00d9ff 0%, #00ffc8 100%);
+        }
+
+        @media (max-width: 768px) {
+            .resume-download-btn {
+                top: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .contact-links {
+                justify-content: center;
+            }
+            
+            .overlay-content {
+                padding: 20px;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="cyber-grid"></div>
+    <div class="data-streams" id="dataStreams"></div>
+
+    <!-- Main Terminal Interface -->
+    <div class="terminal">
+        <div class="header-terminal">
+            <div class="header-content">
+                <div class="user-info">
+                    <div class="avatar">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#00ffc8" stroke-width="3"/>
+                            <circle cx="50" cy="40" r="15" fill="#00ffc8" opacity="0.7"/>
+                            <path d="M30,75 Q50,90 70,75" fill="none" stroke="#00ffc8" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="username">SAAD ULLAH KHAN</h1>
+                        <p class="user-title">// COMPUTER SCIENCE ENGINEER & AI ENTHUSIAST</p>
+                        <div class="terminal-command">
+                            <span class="highlight">$</span> git log --oneline
+                            <span class="blink">_</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-links">
+                    <a href="mailto:saadullahkhan1223344@gmail.com" class="contact-link">
+                        <i class="fas fa-envelope"></i> saadullahkhan1223344@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/saad-ullah-khan-838bb8285" target="_blank" class="contact-link">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/Saaduk" target="_blank" class="contact-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+
+                <button class="resume-download-btn" id="resumeDownloadBtn">
+                    <i class="fas fa-download"></i> Download Resume
+                </button>
+            </div>
+        </div>
+
+        <!-- Interactive Dashboard -->
+        <div class="dashboard">
+            <div class="module" id="profileModule" data-module="profile">
+                <div class="module-icon">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <h3 class="module-title">About</h3>
+                <p class="module-desc">Professional summary, background, and career objectives</p>
+            </div>
+
+            <div class="module" id="skillsModule" data-module="skills">
+                <div class="module-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="module-title">Skills</h3>
+                <p class="module-desc">Programming languages, tools, and technical expertise</p>
+            </div>
+
+            <div class="module" id="educationModule" data-module="education">
+                <div class="module-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="module-title">Education</h3>
+                <p class="module-desc">Academic background and qualifications</p>
+            </div>
+
+            <div class="module" id="internshipModule" data-module="internship">
+                <div class="module-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3 class="module-title">Experience</h3>
+                <p class="module-desc">Internships, training, and professional experience</p>
+            </div>
+
+            <div class="module" id="projectsModule" data-module="projects">
+                <div class="module-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3 class="module-title">Projects</h3>
+                <p class="module-desc">Technical projects and implementations</p>
+            </div>
+
+            <div class="module" id="hackathonModule" data-module="hackathon">
+                <div class="module-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="module-title">Achievements</h3>
+                <p class="module-desc">Competitions, hackathons, and collaborative achievements</p>
+            </div>
+
+            <div class="module" id="interestsModule" data-module="interests">
+                <div class="module-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="module-title">Interests</h3>
+                <p class="module-desc">Professional interests and technological focus areas</p>
+            </div>
+
+            <div class="module" id="contactModule" data-module="contact">
+                <div class="module-icon">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <h3 class="module-title">Contact</h3>
+                <p class="module-desc">Communication channels and contact information</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay for Detailed View -->
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <button class="close-overlay" id="closeOverlay">×</button>
+            <div id="overlayDetails"></div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated data streams
+        function createDataStreams() {
+            const container = document.getElementById('dataStreams');
+            for (let i = 0; i < 20; i++) {
+                const stream = document.createElement('div');
+                stream.className = 'stream';
+                stream.style.left = `${Math.random() * 100}%`;
+                stream.style.animationDelay = `${Math.random() * 5}s`;
+                stream.style.height = `${50 + Math.random() * 150}px`;
+                container.appendChild(stream);
+            }
+        }
+
+        // Module data with cyberpunk styling
+        const data = {
+            profile: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">About Me</h2>
+                    <p class="overlay-subtitle">Professional Background & Summary</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> whoami
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">Professional Background</h3>
+                    <p><span class="highlight">Saad Ullah Khan</span> – Computer Science Engineering student with a strong foundation in programming and problem-solving.</p>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">CAREER OBJECTIVE</h3>
+                    <p>To secure an internship or entry-level opportunity where I can apply my programming skills, learn from industry professionals, and build practical, impactful software solutions while continuously improving my technical foundation.</p>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">Professional Summary</h3>
+                    <p>Computer Science Engineering student with hands-on experience in Python, SQL, and data-driven systems. Experienced through internships, hackathons, and academic projects in problem-solving, machine learning fundamentals, and software development.</p>
+                </div>
+            `,
+            
+            skills: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">Skills</h2>
+                    <p class="overlay-subtitle">Technical Capabilities & Tools</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> cat ~/.techstack
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">PROGRAMMING LANGUAGES</h3>
+                    <span class="tag">Python</span>
+                    <span class="tag">SQL</span>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">DATABASE SYSTEMS</h3>
+                    <span class="tag">SQL Databases</span>
+                    <span class="tag">Data Handling</span>
+                    <span class="tag">ETL Workflows</span>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">CORE CONCEPTS</h3>
+                    <span class="tag">Data Analysis</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Problem Solving</span>
+                    <span class="tag">Software Fundamentals</span>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">TOOLS & PLATFORMS</h3>
+                    <span class="tag">Git</span>
+                    <span class="tag">VS Code</span>
+                    <span class="tag">Jupyter Notebook</span>
+                    <span class="tag">Development Environments</span>
+                </div>
+            `,
+            
+            education: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">Education</h2>
+                    <p class="overlay-subtitle">Academic Foundation & Qualifications</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> cat ~/education.txt
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022 - 2026 (In Progress)</div>
+                        <h4 class="timeline-title">Bachelor of Engineering – Computer Science Engineering</h4>
+                        <p>Lords Institute of Engineering and Technology</p>
+                        <p><span class="highlight">Expected Graduation:</span> 2026</p>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">ACADEMIC FOCUS</h3>
+                    <ul class="content-list">
+                        <li>Programming & Software Development</li>
+                        <li>Data Structures & Algorithms</li>
+                        <li>Database Management Systems</li>
+                        <li>Artificial Intelligence Fundamentals</li>
+                        <li>Computer Vision & Machine Learning</li>
+                    </ul>
+                </div>
+            `,
+            
+            internship: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">Experience</h2>
+                    <p class="overlay-subtitle">Professional Training & Internships</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> cat ~/experience.log
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024</div>
+                        <h4 class="timeline-title">Innomatics Research Labs – Data Science & Generative AI Intern</h4>
+                        <p><span class="highlight">Duration:</span> 3 Months</p>
+                        <ul class="content-list">
+                            <li>Python-based data analysis and machine learning fundamentals</li>
+                            <li>GenAI workflows and practical implementation</li>
+                            <li>Real-world datasets for analytical exercises</li>
+                            <li>Strengthened problem-solving skills</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023</div>
+                        <h4 class="timeline-title">Pantech E-Learning – Data Science & Machine Learning Intern</h4>
+                        <ul class="content-list">
+                            <li>Fundamentals of data science workflows</li>
+                            <li>Machine learning concepts and Python implementation</li>
+                            <li>Data preprocessing and analysis techniques</li>
+                            <li>Basic model development and evaluation</li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            
+            projects: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">Projects</h2>
+                    <p class="overlay-subtitle">Technical Implementations & Solutions</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> ls -la ~/projects
+                </div>
+                
+                <div class="project-showcase">
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fas fa-eye"></i> VisionGuide – AI-Powered Navigation Assistant</h4>
+                        <p>AI navigation system for visually impaired users with object detection and real-time processing</p>
+                        <div style="margin-top: 10px;">
+                            <span class="tag">Python</span>
+                            <span class="tag">Computer Vision</span>
+                            <span class="tag">AI</span>
+                            <span class="tag">Real-time Processing</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fas fa-user-check"></i> Face Recognition–Based Attendance System</h4>
+                        <p>Automated attendance system using facial recognition technology</p>
+                        <div style="margin-top: 10px;">
+                            <span class="tag">Python</span>
+                            <span class="tag">Face Recognition</span>
+                            <span class="tag">System Design</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fas fa-database"></i> Mini ETL Project</h4>
+                        <p>Extract, Transform, Load pipeline with Python and SQL for data processing</p>
+                        <div style="margin-top: 10px;">
+                            <span class="tag">Python</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">ETL</span>
+                            <span class="tag">Data Processing</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fas fa-laptop-code"></i> Academic & Practice Projects</h4>
+                        <p>Various Python and SQL projects focused on data processing and problem-solving</p>
+                        <div style="margin-top: 10px;">
+                            <span class="tag">Python</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">Data Analysis</span>
+                            <span class="tag">Problem Solving</span>
+                        </div>
+                    </div>
+                </div>
+            `,
+            
+            hackathon: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">Achievements</h2>
+                    <p class="overlay-subtitle">Competitions & Notable Accomplishments</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> cat ~/.hackathons
+                </div>
+                
+                <div class="project-showcase">
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fas fa-robot"></i> Agentathon (36-hour Hackathon)</h4>
+                        <p>Built agentic AI solution in a team environment</p>
+                        <span class="tag">AI</span>
+                        <span class="tag">Team Collaboration</span>
+                        <span class="tag">Rapid Development</span>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fas fa-code"></i> HackPrix Hackathon (36-hour)</h4>
+                        <p>Developed tech solution under time constraints</p>
+                        <span class="tag">Problem Solving</span>
+                        <span class="tag">Time Management</span>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fab fa-microsoft"></i> Microsoft CodeWaveHub</h4>
+                        <p>Learned blockchain fundamentals and GitHub Copilot</p>
+                        <span class="tag">Blockchain</span>
+                        <span class="tag">GitHub Copilot</span>
+                        <span class="tag">Microsoft Technologies</span>
+                    </div>
+                    
+                    <div class="project-item">
+                        <h4 class="project-title"><i class="fas fa-cloud"></i> Freshworks SaaS@Scale AI 2025</h4>
+                        <p>Exposure to scalable systems and cloud AI discussions</p>
+                        <span class="tag">Cloud Computing</span>
+                        <span class="tag">Scalable Systems</span>
+                        <span class="tag">AI Integration</span>
+                    </div>
+                </div>
+            `,
+            
+            interests: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">Interests</h2>
+                    <p class="overlay-subtitle">Professional Focus Areas & Goals</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> interests --future --tech-focus
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">TECHNOLOGICAL INTERESTS</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                        <span class="tag" style="font-size: 1rem; padding: 8px 15px;">Data-driven Software Systems</span>
+                        <span class="tag" style="font-size: 1rem; padding: 8px 15px;">Artificial Intelligence</span>
+                        <span class="tag" style="font-size: 1rem; padding: 8px 15px;">Generative AI</span>
+                        <span class="tag" style="font-size: 1rem; padding: 8px 15px;">Intelligent Automation</span>
+                        <span class="tag" style="font-size: 1rem; padding: 8px 15px;">Scalable System Design</span>
+                        <span class="tag" style="font-size: 1rem; padding: 8px 15px;">Real-world AI Problem Solving</span>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">FUTURE GOALS</h3>
+                    <ul class="content-list">
+                        <li>Master advanced AI and machine learning concepts</li>
+                        <li>Build scalable, intelligent software systems</li>
+                        <li>Contribute to open-source AI projects</li>
+                        <li>Develop expertise in cloud and distributed systems</li>
+                        <li>Create impactful solutions using technology</li>
+                    </ul>
+                </div>
+            `,
+            
+            contact: `
+                <div class="overlay-header">
+                    <h2 class="overlay-title">Contact</h2>
+                    <p class="overlay-subtitle">Get in Touch</p>
+                </div>
+                
+                <div class="terminal-command">
+                    <span class="highlight">$</span> cat ~/.contact
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">PRIMARY CHANNELS</h3>
+                    <div style="display: grid; gap: 20px; margin-top: 20px;">
+                        <a href="tel:+918978181621" class="contact-link" style="font-size: 1.1rem;">
+                            <i class="fas fa-phone"></i> Phone: +91 8978181621
+                        </a>
+                        <a href="mailto:saadullahkhan1223344@gmail.com" class="contact-link" style="font-size: 1.1rem;">
+                            <i class="fas fa-envelope"></i> Email: saadullahkhan1223344@gmail.com
+                        </a>
+                        <a href="https://linkedin.com/in/saad-ullah-khan-838bb8285" target="_blank" class="contact-link" style="font-size: 1.1rem;">
+                            <i class="fab fa-linkedin"></i> LinkedIn: Saad Ullah Khan
+                        </a>
+                        <a href="https://github.com/Saaduk" target="_blank" class="contact-link" style="font-size: 1.1rem;">
+                            <i class="fab fa-github"></i> GitHub: Saaduk
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h3 class="content-title">AVAILABILITY STATUS</h3>
+                    <p><span class="highlight">Status:</span> <span style="color: #2ecc71;">● ACTIVE</span></p>
+                    <p><span class="highlight">Seeking:</span> Internship or entry-level opportunities</p>
+                    <p><span class="highlight">Response Time:</span> Within 24 hours</p>
+                </div>
+            `
+        };
+
+        // Generate and Download Resume as PDF
+        function generateResume() {
+            const element = document.createElement('div');
+            element.style.padding = '40px';
+            element.style.fontFamily = 'Arial, sans-serif';
+            element.style.color = '#000';
+            element.style.backgroundColor = '#fff';
+            element.style.lineHeight = '1.6';
+            element.style.fontSize = '11pt';
+
+            const resumeContent = `
+                <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 15px;">
+                    <h1 style="margin: 0; font-size: 20pt; font-weight: bold;">SAAD ULLAH KHAN</h1>
+                    <p style="margin: 5px 0; font-size: 10pt;">Computer Science Engineer | AI Enthusiast</p>
+                    <p style="margin: 5px 0; font-size: 10pt;">
+                        <strong>Phone:</strong> <a href="tel:+918978181621" style="color: #0000ff; text-decoration: underline;">+91 8978181621</a> | 
+                        <strong>Email:</strong> <a href="mailto:saadullahkhan1223344@gmail.com" style="color: #0000ff; text-decoration: underline;">saadullahkhan1223344@gmail.com</a> | 
+                        <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/saad-ullah-khan-838bb8285" style="color: #0000ff; text-decoration: underline;">linkedin.com/in/saad-ullah-khan-838bb8285</a> | 
+                        <strong>GitHub:</strong> <a href="https://github.com/Saaduk" style="color: #0000ff; text-decoration: underline;">github.com/Saaduk</a>
+                    </p>
+                </div>
+                <br>
+
+                <div style="margin-bottom: 15px;">
+                    <h2 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #000; padding-bottom: 3px;">PROFESSIONAL SUMMARY</h2>
+                    <p style="margin: 0; text-align: justify;">Computer Science Engineering student with hands-on experience in Python, SQL, and data-driven systems. Experienced through internships, hackathons, and academic projects in problem-solving, machine learning fundamentals, and software development. Seeking an internship or entry-level opportunity to apply programming skills, learn from industry professionals, and build practical, impactful software solutions while continuously improving technical foundation.</p>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h2 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #000; padding-bottom: 3px;">EDUCATION</h2>
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin: 0; font-weight: bold;">Bachelor of Engineering - Computer Science Engineering</p>
+                        <p style="margin: 2px 0; font-style: italic;">Lords Institute of Engineering and Technology</p>
+                        <p style="margin: 2px 0;"><strong>Duration:</strong> 2022 - 2026 (In Progress)</p>
+                        <p style="margin: 2px 0;"><strong>Focus Areas:</strong> Programming & Software Development, Data Structures & Algorithms, Database Management Systems, Artificial Intelligence Fundamentals, Computer Vision & Machine Learning</p>
+                    </div>
+                </div>
+                <br>
+
+                <div style="margin-bottom: 15px;">
+                    <h2 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #000; padding-bottom: 3px;">PROFESSIONAL EXPERIENCE</h2>
+                    <div style="margin-bottom: 12px;">
+                        <p style="margin: 0; font-weight: bold;">Data Science & Generative AI Intern</p>
+                        <p style="margin: 2px 0;"><strong>Innomatics Research Labs</strong> | 2024 (3 Months)</p>
+                        <ul style="margin: 5px 0 0 20px; padding: 0;">
+                            <li style="margin-bottom: 3px;">Completed Python-based data analysis and machine learning fundamentals</li>
+                            <li style="margin-bottom: 3px;">Worked on GenAI workflows and practical implementations</li>
+                            <li style="margin-bottom: 3px;">Analyzed real-world datasets for analytical exercises</li>
+                            <li style="margin-bottom: 3px;">Strengthened problem-solving and analytical skills</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p style="margin: 0; font-weight: bold;">Data Science & Machine Learning Intern</p>
+                        <p style="margin: 2px 0;"><strong>Pantech E-Learning</strong> | 2023</p>
+                        <ul style="margin: 5px 0 0 20px; padding: 0;">
+                            <li style="margin-bottom: 3px;">Learned fundamentals of data science workflows and pipeline development</li>
+                            <li style="margin-bottom: 3px;">Implemented machine learning concepts using Python</li>
+                            <li style="margin-bottom: 3px;">Practiced data preprocessing and analysis techniques</li>
+                            <li style="margin-bottom: 3px;">Developed and evaluated basic predictive models</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h2 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #000; padding-bottom: 3px;">TECHNICAL SKILLS</h2>
+                    <p style="margin: 5px 0;"><strong>Programming Languages:</strong> Python, SQL</p>
+                    <p style="margin: 5px 0;"><strong>Database Systems:</strong> SQL Databases, Data Handling, ETL Workflows</p>
+                    <p style="margin: 5px 0;"><strong>Core Concepts:</strong> Data Analysis, Machine Learning, Problem Solving, Software Fundamentals</p>
+                    <p style="margin: 5px 0;"><strong>Tools & Platforms:</strong> Git, VS Code, Jupyter Notebook, Development Environments</p>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h2 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #000; padding-bottom: 3px;">TECHNICAL PROJECTS</h2>
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin: 0; font-weight: bold;">VisionGuide - AI-Powered Navigation Assistant</p>
+                        <p style="margin: 2px 0;">AI navigation system for visually impaired users with object detection and real-time processing</p>
+                        <p style="margin: 2px 0;"><strong>Technologies:</strong> Python, Computer Vision, AI, Real-time Processing</p>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin: 0; font-weight: bold;">Face Recognition-Based Attendance System</p>
+                        <p style="margin: 2px 0;">Automated attendance system using facial recognition technology</p>
+                        <p style="margin: 2px 0;"><strong>Technologies:</strong> Python, Face Recognition, System Design</p>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin: 0; font-weight: bold;">Mini ETL Project</p>
+                        <p style="margin: 2px 0;">Extract, Transform, Load pipeline with Python and SQL for data processing</p>
+                        <p style="margin: 2px 0;"><strong>Technologies:</strong> Python, SQL, ETL, Data Processing</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0; font-weight: bold;">Academic & Practice Projects</p>
+                        <p style="margin: 2px 0;">Various Python and SQL projects focused on data processing and problem-solving</p>
+                        <p style="margin: 2px 0;"><strong>Technologies:</strong> Python, SQL, Data Analysis</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h2 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #000; padding-bottom: 3px;">ACHIEVEMENTS & HACKATHONS</h2>
+                    <ul style="margin: 5px 0 0 20px; padding: 0;">
+                        <li style="margin-bottom: 5px;"><strong>Agentathon (36-hour Hackathon):</strong> Built agentic AI solution in a team environment with focus on rapid development and collaboration</li>
+                        <li style="margin-bottom: 5px;"><strong>HackPrix Hackathon (36-hour):</strong> Developed tech solution under time constraints demonstrating problem-solving abilities</li>
+                        <li style="margin-bottom: 5px;"><strong>Microsoft CodeWaveHub:</strong> Learned blockchain fundamentals and GitHub Copilot development practices</li>
+                        <li style="margin-bottom: 5px;"><strong>Freshworks SaaS@Scale AI 2025:</strong> Gained exposure to scalable systems architecture and cloud-based AI integration</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 style="font-size: 12pt; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid #000; padding-bottom: 3px;">AREAS OF INTEREST</h2>
+                    <p style="margin: 0;">Data-driven Software Systems, Artificial Intelligence, Generative AI, Intelligent Automation, Scalable System Design, Real-world AI Problem Solving, Cloud Computing, Distributed Systems, Open-source Contributions</p>
+                </div>
+            `;
+
+            element.innerHTML = resumeContent;
+
+            const options = {
+                margin: 0.5,
+                filename: 'Saad_Ullah_Khan_Resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(options).from(element).save();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createDataStreams();
+            
+            // Resume download button handler
+            const resumeBtn = document.getElementById('resumeDownloadBtn');
+            if (resumeBtn) {
+                resumeBtn.addEventListener('click', generateResume);
+            }
+            
+            // Module click handlers
+            const modules = document.querySelectorAll('.module');
+            const overlay = document.getElementById('overlay');
+            const overlayDetails = document.getElementById('overlayDetails');
+            const closeOverlay = document.getElementById('closeOverlay');
+            
+            modules.forEach(module => {
+                module.addEventListener('click', function() {
+                    const moduleType = this.getAttribute('data-module');
+                    overlayDetails.innerHTML = data[moduleType] || '<p>Data not available</p>';
+                    overlay.style.display = 'flex';
+                    
+                    // Add cyber sound effect
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.5);
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                });
+            });
+            
+            // Close overlay
+            closeOverlay.addEventListener('click', function() {
+                overlay.style.display = 'none';
+            });
+            
+            // Close overlay when clicking outside content
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.style.display = 'none';
+                }
+            });
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    overlay.style.display = 'none';
+                }
+            });
+            
+            // Add terminal typing effect
+            const commands = [
+                "whoami",
+                "pwd",
+                "Portfolio system ready"
+            ];
+            
+            let commandIndex = 0;
+            const terminalOutput = document.querySelector('.terminal-command');
+            
+            function typeCommand() {
+                if (commandIndex < commands.length) {
+                    setTimeout(() => {
+                        terminalOutput.innerHTML = `<span class="highlight">$</span> ${commands[commandIndex]}<span class="blink">_</span>`;
+                        commandIndex++;
+                        typeCommand();
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        terminalOutput.innerHTML = `<span class="highlight">$</span> cd ~/portfolio<span class="blink">_</span>`;
+                    }, 1000);
+                }
+            }
+            
+            // Start typing effect after a delay
+            setTimeout(typeCommand, 1000);
+        });
+    </script>
+</body>
+</html>
