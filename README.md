@@ -3,7 +3,7 @@
 This is my personal portfolio website built to showcase my skills, projects, education, and contact information in a professional way.
 
 ## 🚀 Live Demo
-🔗 [https://saad-ullah-khan.netlify.app](https://6973d0ef4a9addb2e00a4e98--charming-salmiakki-afd457.netlify.app/)
+🔗 [https://saad-ullah-khan.netlify.app](https://saadport.netlify.app/)
 
 ## ✨ Features
 - Responsive modern UI
