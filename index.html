@@ -1083,6 +1083,33 @@
                 doc.setTextColor(0, 0, 0);
             }
 
+            function addInlineLinkLine(items) {
+                let x = margin;
+                items.forEach((item, index) => {
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(9);
+                    doc.setTextColor(0, 0, 0);
+                    const labelText = item.label + ' ';
+                    doc.text(labelText, x, cursorY);
+                    x += doc.getTextWidth(labelText);
+
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 102, 204);
+                    doc.textWithLink(item.text, x, cursorY, { url: item.url });
+                    x += doc.getTextWidth(item.text);
+
+                    if (index < items.length - 1) {
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        const separator = ' | ';
+                        doc.text(separator, x, cursorY);
+                        x += doc.getTextWidth(separator);
+                    }
+                });
+                cursorY += lineHeight;
+                doc.setTextColor(0, 0, 0);
+            }
+
             addText('SAAD ULLAH KHAN', { fontStyle: 'bold', fontSize: 24 });
             addText('AI Engineer | Software Developer', { fontSize: 11 });
             addText('Building AI systems, automation pipelines, and scalable software solutions.', { fontSize: 9 });
@@ -1092,12 +1119,16 @@
             doc.line(margin, cursorY, pageWidth - margin, cursorY);
             cursorY += 12;
 
-            addLinkText('Phone:', '+91 8978181621', 'tel:+918978181621');
-            addLinkText('Email:', 'saadullahkhan1223344@gmail.com', 'mailto:saadullahkhan1223344@gmail.com');
-            addLinkText('LinkedIn:', 'linkedin.com/in/saad-ullah-khan-838bb8285', 'https://linkedin.com/in/saad-ullah-khan-838bb8285');
-            addLinkText('GitHub:', 'github.com/Saaduk', 'https://github.com/Saaduk');
-            addLinkText('Portfolio:', 'saadport.netlify.app', 'https://saadport.netlify.app/');
-            cursorY += 2;
+            addInlineLinkLine([
+                { label: 'Phone:', text: '+91 8978181621', url: 'tel:+918978181621' },
+                { label: 'Email:', text: 'saadullahkhan1223344@gmail.com', url: 'mailto:saadullahkhan1223344@gmail.com' }
+            ]);
+            addInlineLinkLine([
+                { label: 'LinkedIn:', text: 'linkedin.com/in/saad-ullah-khan-838bb8285', url: 'https://linkedin.com/in/saad-ullah-khan-838bb8285' },
+                { label: 'GitHub:', text: 'github.com/Saaduk', url: 'https://github.com/Saaduk' },
+                { label: 'Portfolio:', text: 'saadport.netlify.app', url: 'https://saadport.netlify.app/' }
+            ]);
+            cursorY += 6;
 
             addSectionHeader('PROFESSIONAL SUMMARY');
             addText('AI Engineer and Software Developer with practical experience delivering Python-powered AI systems, automation workflows, and data-driven backend solutions. Built internship workstreams around generative AI, analytics automation, and production-aware tooling. Seeking engineering roles that leverage scalable systems, APIs, automation, and intelligent software design.', { fontSize: 10 });
